@@ -11,7 +11,7 @@ img {vertical-align: middle;}
 /* Slideshow container */
 .slideshow-container {
   /* max-width: 1000px; */
-  max-width: 75%;
+
   position: relative;
   margin: auto;
 }
@@ -70,78 +70,104 @@ img {vertical-align: middle;}
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
 }
+
+.float-container {
+    padding: 2px;
+}
+
+.float-child-left {
+    width: 75%;
+    float: left;
+    padding: 2px;
+}  
+
+.float-child-right {
+    width: 25%;
+    float: right;
+    padding: 2px;
+}  
+
 </style>
 </head>
-<body style="height: 90vh;">
+<body style="height: 100vh;">
+
+<div class="float-container">
+
+    <div class="float-child-left">
 
 
-<div class="slideshow-container" style="width:100%;">
+    <div class="slideshow-container" style="width:100%;">
 
-<div class="mySlides fade" height="70%">
-  <div class="numbertext">1 / 9</div>
-  <img src="images/Fundraising_Ramadan_2022_v2.001.jpeg" style="width:100%; height:70vh;">
+    <div class="mySlides fade" height="100%">
+    <div class="numbertext">1 / 9</div>
+    <img src="images/Fundraising_Ramadan_2022_v2.001.jpeg" style="width:100%; height:90vh;">
+    </div>
+
+    <div class="mySlides fade">
+    <div class="numbertext">2 / 9</div>
+    <img src="images/Fundraising_Ramadan_2022_v2.002.jpeg" style="width:100%; height:90vh;">
+    </div>
+
+    <div class="mySlides fade">
+    <div class="numbertext">3 / 9</div>
+    <img src="images/Fundraising_Ramadan_2022_v2.003.jpeg" style="width:100%; height:90vh;">
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">4 / 9</div>
+        <img src="images/Fundraising_Ramadan_2022_v2.004.jpeg" style="width:100%; height:90vh;">
+    </div>
+    
+    <div class="mySlides fade">
+        <div class="numbertext">5 / 9</div>
+        <img src="images/Fundraising_Ramadan_2022_v2.005.jpeg" style="width:100%; height:90vh;">
+    </div>
+    
+    <div class="mySlides fade">
+        <div class="numbertext">6 / 9</div>
+        <img src="images/Fundraising_Ramadan_2022_v2.006.jpeg" style="width:100%; height:90vh;">
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">7 / 9</div>
+        <img src="images/Fundraising_Ramadan_2022_v2.007.jpeg" style="width:100%; height:90vh;">
+    </div>
+    
+    <div class="mySlides fade">
+        <div class="numbertext">8 / 9</div>
+        <img src="images/Fundraising_Ramadan_2022_v2.008.jpeg" style="width:100%; height:90vh;">
+    </div>
+    
+    <div class="mySlides fade">
+        <div class="numbertext">9 / 9</div>
+        <img src="images/Fundraising_Ramadan_2022_v2.009.jpeg" style="width:100%; height:90vh;">
+    </div>
+    </div>
+    <br>
+
+    <div style="text-align:center;">
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span>
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span>
+    </div>
+            </div>
+
+    <div class="float-child-right">
+
+    <div class="timewidget" style="text-align:center;">
+        <iframe id="the-iframe" src="https://timesprayer.com/widgets.php?frame=2&amp;lang=en&amp;name=Hartford&amp;avachang=false&amp;method=2" 
+            style="border: none; overflow: hidden; width: 100%; height: 275px;"></iframe>
+        <div><b>Jumuaa: 1:00PM<br><br>
+            20 minutes after adhan except Maghrib and Fajir 10 minutes</b></div>
+    </div>
 </div>
-
-<div class="mySlides fade">
-  <div class="numbertext">2 / 9</div>
-  <img src="images/Fundraising_Ramadan_2022_v2.002.jpeg" style="width:100%; height:70vh;">
 </div>
-
-<div class="mySlides fade">
-  <div class="numbertext">3 / 9</div>
-  <img src="images/Fundraising_Ramadan_2022_v2.003.jpeg" style="width:100%; height:70vh;">
-</div>
-
-<div class="mySlides fade">
-    <div class="numbertext">4 / 9</div>
-    <img src="images/Fundraising_Ramadan_2022_v2.004.jpeg" style="width:100%; height:70vh;">
-  </div>
-  
-  <div class="mySlides fade">
-    <div class="numbertext">5 / 9</div>
-    <img src="images/Fundraising_Ramadan_2022_v2.005.jpeg" style="width:100%; height:70vh;">
-  </div>
-  
-  <div class="mySlides fade">
-    <div class="numbertext">6 / 9</div>
-    <img src="images/Fundraising_Ramadan_2022_v2.006.jpeg" style="width:100%; height:70vh;">
-  </div>
-
-  <div class="mySlides fade">
-    <div class="numbertext">7 / 9</div>
-    <img src="images/Fundraising_Ramadan_2022_v2.007.jpeg" style="width:100%; height:70vh;">
-  </div>
-  
-  <div class="mySlides fade">
-    <div class="numbertext">8 / 9</div>
-    <img src="images/Fundraising_Ramadan_2022_v2.008.jpeg" style="width:100%; height:70vh;">
-  </div>
-  
-  <div class="mySlides fade">
-    <div class="numbertext">9 / 9</div>
-    <img src="images/Fundraising_Ramadan_2022_v2.009.jpeg" style="width:100%; height:70vh;">
-  </div>
-</div>
-<br>
-
-<div style="text-align:center; height: 5vh;">
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span>
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span>
-</div>
-
-<div class="timewidget" style="text-align:center;">
-    <iframe src="https://timesprayer.com/widgets.php?frame=1&amp;lang=en&amp;name=Hartford&amp;avachang=false&amp;method=2" 
-        style="border: none; overflow: hidden; width: 75%; height: 150px;"></iframe>
-    <div><b>Jumuaa: 1:00PM - - - Iqama 20 minutes after adhan except Maghrib and Fajir 10 minutes</b></div>
-</div>
-
 <script>
 let slideIndex = 0;
 showSlides();
@@ -162,6 +188,7 @@ function showSlides() {
   dots[slideIndex-1].className += " active";
   setTimeout(showSlides, 6000); // Change image every 6 seconds
 }
+
 </script>
 
 </body>
