@@ -200,6 +200,12 @@
         td.heightlithcolor {
             background: #3A4E13
         }
+
+        #specialMsg {
+            font-size: 35px;
+            text-align: center;
+            color: blue;
+        }
     </style>
 </head>
 
@@ -299,6 +305,7 @@
                                     <p></p>
                                     <div id="dategregorian"></div>
                                     <div id="datehijri"></div>
+                                    <div id="datehijri_ar"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -342,23 +349,66 @@
                     </table>
                 </div>
                 
+                <div id="specialMsg">
+                    <br>
+                    <br>
+                    Fundraising Dinner Friday 4/29 - All Invited!! 
+                </div>
+
                 <script>
-                    //var todayDate = new Date().toISOString().slice(0, 10);
+                    // var todayDate = new Date();
+                    // var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
+                    // console.log("today is " + today);
+
+                    // $.getJSON('https://api.pray.zone/v2/times/day.json?city=new-britain&school=2&timeformat=1&date='+today, function (data) {
+
+                    //     var fajr = `${data.results.datetime[0].times.Fajr}`;
+                    //     var dhuhr = `${data.results.datetime[0].times.Dhuhr}`;
+                    //     var asr = `${data.results.datetime[0].times.Asr}`;
+                    //     var maghrib = `${data.results.datetime[0].times.Maghrib}`;
+                    //     var isha = `${data.results.datetime[0].times.Isha}`;
+
+                    //     var city = `${data.results.location.city}`;
+                    //     var dategregorian = `${data.results.datetime[0].date.gregorian}`;
+                    //     var datehijri = `${data.results.datetime[0].date.hijri}`;
+
+                    //     $("#fajrtime").html(fajr);
+                    //     $("#dhuhrtime").html(dhuhr);
+                    //     $("#asrtime").html(asr);
+                    //     $("#maghribtime").html(maghrib);
+                    //     $("#ishatime").html(isha);
+
+                    //     $("#city").html(city);
+                    //     $("#dategregorian").html(dategregorian);
+                    //     $("#datehijri").html(datehijri);
+
+                    // });
+
                     var todayDate = new Date();
                     var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
                     console.log("today is " + today);
 
-                    $.getJSON('https://api.pray.zone/v2/times/day.json?city=new-britain&school=2&timeformat=1&date='+today, function (data) {
+                    $.getJSON('https://api.aladhan.com/v1/timingsByCity?city=New-Britain&country=United%20States&method=2', function (data) {
 
-                        var fajr = `${data.results.datetime[0].times.Fajr}`;
-                        var dhuhr = `${data.results.datetime[0].times.Dhuhr}`;
-                        var asr = `${data.results.datetime[0].times.Asr}`;
-                        var maghrib = `${data.results.datetime[0].times.Maghrib}`;
-                        var isha = `${data.results.datetime[0].times.Isha}`;
+                        var fajr = `${data.data.timings.Fajr}`;
+                        var dhuhr = `${data.data.timings.Dhuhr}`;
+                        var asr = `${data.data.timings.Asr}`;
+                        var maghrib = `${data.data.timings.Maghrib}`;
+                        var isha = `${data.data.timings.Isha}`;
 
-                        var city = `${data.results.location.city}`;
-                        var dategregorian = `${data.results.datetime[0].date.gregorian}`;
-                        var datehijri = `${data.results.datetime[0].date.hijri}`;
+                        //var city = `${data.results.location.city}`;
+                        var city = 'New Britain'
+                        //var dategregorian = `${data.data.date.gregorian.date}`;
+                        var dategregorian = `${data.data.date.gregorian.month.en + " " +
+                            data.data.date.gregorian.day + " " +
+                            data.data.date.gregorian.year}`;
+                        //var datehijri = `${data.data.date.hijri.date}`;
+                        var datehijri = `${data.data.date.hijri.month.en + " " +
+                            data.data.date.hijri.day + " " +
+                            data.data.date.hijri.year}`;
+                        var datehijri_ar = `${data.data.date.hijri.month.ar + " " +
+                            data.data.date.hijri.day + " " +
+                            data.data.date.hijri.year}`;
 
                         $("#fajrtime").html(fajr);
                         $("#dhuhrtime").html(dhuhr);
@@ -369,8 +419,10 @@
                         $("#city").html(city);
                         $("#dategregorian").html(dategregorian);
                         $("#datehijri").html(datehijri);
+                        $("#datehijri_ar").html(datehijri_ar);
 
                     });
+                    
                 </script>
 
             </div>
