@@ -343,7 +343,12 @@
                 </div>
                 
                 <script>
-                    $.getJSON('https://api.pray.zone/v2/times/today.json?city=new-britain&school=2&timeformat=1', function (data) {
+                    //var todayDate = new Date().toISOString().slice(0, 10);
+                    var todayDate = new Date();
+                    var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
+                    console.log("today is " + today);
+
+                    $.getJSON('https://api.pray.zone/v2/times/day.json?city=new-britain&school=2&timeformat=1&date='+today, function (data) {
 
                         var fajr = `${data.results.datetime[0].times.Fajr}`;
                         var dhuhr = `${data.results.datetime[0].times.Dhuhr}`;
