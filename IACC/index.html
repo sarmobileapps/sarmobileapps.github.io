@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="3600">
+    <meta http-equiv="refresh" content="1800">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
         * {
@@ -163,7 +163,7 @@
         }
 
         #boxframeprayer table tr td .city {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, .63)
         }
@@ -181,7 +181,7 @@
         }
 
         #boxframeprayer table.tbllistprayer tr td {
-            font-size: 24px;
+            font-size: 28px;
             text-align: center;
             border-left: 0px solid #6E9226;
             border-right: 0px solid #6E9226;
@@ -191,6 +191,10 @@
 
         .datetime {
             font-size: 20px;
+        }
+
+        .dateandtime {
+            font-size: 24px;
         }
 
         .optiontr1 select {
@@ -297,7 +301,7 @@
                                     <div class="currentprayer"></div>
                                     <div class="city" id="city"></div>
                                 </td>
-                                <td>
+                                <td class="dateandtime">
                                     Current Time:<br> <span id="datetime"></span>
 
                                         <script>
@@ -321,74 +325,63 @@
                         <tbody>
                             <tr class="headtdprayer">
                                 <td colspan="3" class="heightlithcolor">Prayer</td>
-                                <td colspan="3" class="heightlithcolor">Time</td>
+                                <td colspan="3" class="heightlithcolor">Adhan</td>
+                                <td colspan="3" class="heightlithcolor">Iqama</td>
                             </tr>
                             <tr>
                                 <td colspan="3" >Fajr</td>
                                 <td colspan="3" id="fajrtime"></td>
+                                <td colspan="3" id="fajrtimeIqama"></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Dhuhr</td>
                                 <td colspan="3" id="dhuhrtime"></td>
+                                <td colspan="3" id="dhuhrtimeIqama"></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Asr</td>
                                 <td colspan="3" id="asrtime"></td>
+                                <td colspan="3" id="asrtimeIqama"></td>
                             </tr>
                             <tr>
                                 <td colspan="3" >Maghrib</td>
                                 <td colspan="3" id="maghribtime"></td>
+                                <td colspan="3" id="maghribtimeIqama"></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Ishaa</td>
                                 <td colspan="3" id="ishatime"></td>
+                                <td colspan="3" id="ishatimeIqama"></td>
                             </tr>
                             <tr style="background-color: white;">
+                                <td colspan="3"></td>
                                 <td colspan="3"></td>
                                 <td colspan="3"></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Jumuaa</td>
                                 <td colspan="3">1:00 PM</td>
+                                <td colspan="3"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 
+                <div>
+                    <p id="days"></p>
+                    <p id="hours"></p>
+                    <p id="mins"></p>
+                    <p id="secs"></p>
+                    <h2 id="end"></h2>
+                </div>
+
                 <div id="specialMsg">
                     <br>
                     <br>
-                     
+                    Zakat Al-Fitr is $15 per person. Must be paid before Eid Al-Fitr prayers!
                 </div>
 
                 <script>
-                    // var todayDate = new Date();
-                    // var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
-                    // console.log("today is " + today);
-
-                    // $.getJSON('https://api.pray.zone/v2/times/day.json?city=new-britain&school=2&timeformat=1&date='+today, function (data) {
-
-                    //     var fajr = `${data.results.datetime[0].times.Fajr}`;
-                    //     var dhuhr = `${data.results.datetime[0].times.Dhuhr}`;
-                    //     var asr = `${data.results.datetime[0].times.Asr}`;
-                    //     var maghrib = `${data.results.datetime[0].times.Maghrib}`;
-                    //     var isha = `${data.results.datetime[0].times.Isha}`;
-
-                    //     var city = `${data.results.location.city}`;
-                    //     var dategregorian = `${data.results.datetime[0].date.gregorian}`;
-                    //     var datehijri = `${data.results.datetime[0].date.hijri}`;
-
-                    //     $("#fajrtime").html(fajr);
-                    //     $("#dhuhrtime").html(dhuhr);
-                    //     $("#asrtime").html(asr);
-                    //     $("#maghribtime").html(maghrib);
-                    //     $("#ishatime").html(isha);
-
-                    //     $("#city").html(city);
-                    //     $("#dategregorian").html(dategregorian);
-                    //     $("#datehijri").html(datehijri);
-
-                    // });
 
                     var todayDate = new Date();
                     var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
@@ -396,19 +389,25 @@
 
                     $.getJSON('https://api.aladhan.com/v1/timingsByCity?city=New-Britain&country=United%20States&method=2', function (data) {
 
-                        var fajr = `${data.data.timings.Fajr}`;
-                        var dhuhr = `${data.data.timings.Dhuhr}`;
-                        var asr = `${data.data.timings.Asr}`;
-                        var maghrib = `${data.data.timings.Maghrib}`;
-                        var isha = `${data.data.timings.Isha}`;
+                        fajrRawTime = `${data.data.timings.Fajr}`;
+                        console.log(fajrRawTime);
 
-                        //var city = `${data.results.location.city}`;
+                        var fajr = tConvert(`${data.data.timings.Fajr}`);
+                        var dhuhr = tConvert(`${data.data.timings.Dhuhr}`);
+                        var asr = tConvert(`${data.data.timings.Asr}`);
+                        var maghrib = tConvert(`${data.data.timings.Maghrib}`);
+                        var isha = tConvert(`${data.data.timings.Isha}`);
+
+                        var fajrIqama = tConvert(addMinutes(`${data.data.timings.Fajr}`, 20));
+                        var dhuhrIqama = tConvert(addMinutes(`${data.data.timings.Dhuhr}`, 20));
+                        var asrIqama = tConvert(addMinutes(`${data.data.timings.Asr}`, 20));
+                        var maghribIqama = tConvert(addMinutes(`${data.data.timings.Maghrib}`, 10));
+                        var ishaIqama = tConvert(addMinutes(`${data.data.timings.Isha}`, 10));
+
                         var city = 'New Britain'
-                        //var dategregorian = `${data.data.date.gregorian.date}`;
                         var dategregorian = `${data.data.date.gregorian.month.en + " " +
                             data.data.date.gregorian.day + " " +
                             data.data.date.gregorian.year}`;
-                        //var datehijri = `${data.data.date.hijri.date}`;
                         var datehijri = `${data.data.date.hijri.month.en + " " +
                             data.data.date.hijri.day + " " +
                             data.data.date.hijri.year}`;
@@ -422,6 +421,12 @@
                         $("#maghribtime").html(maghrib);
                         $("#ishatime").html(isha);
 
+                        $("#fajrtimeIqama").html(fajrIqama);
+                        $("#dhuhrtimeIqama").html(dhuhrIqama);
+                        $("#asrtimeIqama").html(asrIqama);
+                        $("#maghribtimeIqama").html(maghribIqama);
+                        $("#ishatimeIqama").html(ishaIqama);
+
                         $("#city").html(city);
                         $("#dategregorian").html(dategregorian);
                         $("#datehijri").html(datehijri);
@@ -429,6 +434,26 @@
 
                     });
                     
+                    function tConvert (time) {
+                        // Check correct time format and split into components
+                        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+                        if (time.length > 1) { // If time format correct
+                            time = time.slice (1);  // Remove full string match value
+                            time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+                            time[0] = +time[0] % 12 || 12; // Adjust hours
+                        }
+                        return time.join (''); // return adjusted time or original string
+                    }
+
+                    function addMinutes(time, minsToAdd) {
+                        function D(J){ return (J<10? '0':'') + J;};
+                        var piece = time.split(':');
+                        var mins = piece[0]*60 + +piece[1] + +minsToAdd;
+
+                        return D(mins%(24*60)/60 | 0) + ':' + D(mins%60);  
+                    }
+                      
                 </script>
 
             </div>
@@ -453,7 +478,7 @@
             }
             slides[slideIndex - 1].style.display = "block";
             dots[slideIndex - 1].className += " active";
-            setTimeout(showSlides, 6000); // Change image every 6 seconds
+            setTimeout(showSlides, 10000); // Change image every 10 seconds
         }
 
     </script>
@@ -470,6 +495,59 @@
         console.log("msTillMidnight: " + msTillMidnight);
         setTimeout('window.location = window.location.href', msTillMidnight);
     </script>
+
+    <!-- <script>
+        // The data/time we want to countdown to
+        
+        //var countDownDate = new Date("Jul 25, 2022 16:37:52").getTime();
+        console.log(fajrRawTime);
+        parseTime(fajrRawTime);
+        console.log(fajrRawTime);
+
+        // Run myfunc every second
+        var myfunc = setInterval(function() {
+
+        var now = new Date().getTime();
+        var timeleft = countDownDate - now;
+            
+        // Calculating the days, hours, minutes and seconds left
+        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+            
+        // Result is output to the specific element
+        document.getElementById("days").innerHTML = days + "d "
+        document.getElementById("hours").innerHTML = hours + "h " 
+        document.getElementById("mins").innerHTML = minutes + "m " 
+        document.getElementById("secs").innerHTML = seconds + "s " 
+            
+        // Display the message when countdown is over
+        if (timeleft < 0) {
+            clearInterval(myfunc);
+            document.getElementById("days").innerHTML = ""
+            document.getElementById("hours").innerHTML = "" 
+            document.getElementById("mins").innerHTML = ""
+            document.getElementById("secs").innerHTML = ""
+            document.getElementById("end").innerHTML = "TIME UP!!";
+        }
+        }, 1000);
+
+    function parseTime( t ) {
+        var countDownDate = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(), 
+            00, 0, 0 // ...at 00:00:00 hours
+        );
+        var time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+        d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+        d.setMinutes( parseInt( time[2]) || 0 );
+        return d;
+    } -->
+    </script>
+    
+
 </body>
 
 </html>
