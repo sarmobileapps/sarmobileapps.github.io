@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="1800">
+    <meta http-equiv="refresh" content="3600">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         var fajrRawTime = null;
@@ -217,6 +217,30 @@
             text-align: center;
             color: blue;
         }
+
+        .prayerCountDownMsg1 {
+            font-size: 40px;
+            text-align: center;
+            color: red;
+        }
+        .prayerCountDownMsg2 {
+            font-size: 40px;
+            text-align: center;
+            color: red;
+            animation: blinker 4s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .highLight {
+            background-color: yellow;
+            color: red;
+        }
+
     </style>
 </head>
 
@@ -305,12 +329,8 @@
                             <tr>
                                 <td>
                                     <img src="images/IACC_Logo_v2.jpeg"></td>
-                                <td>
-                                    <div class="currentprayer"></div>
-                                    <div class="city" id="city"></div>
-                                </td>
-                                <td class="dateandtime">
-                                    Current Time:<br> <span id="datetime"></span>
+                                <td colspan="2" class="dateandtime">
+                                    Current Time: <span id="datetime"></span>
 
                                         <script>
                                             function refreshTime() {
@@ -320,16 +340,23 @@
                                                 }
                                             setInterval(refreshTime, 1000);
                                         </script>
-                                    <p></p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="city" id="city"></div>
+                                </td>
+                                <td colspan="2" class="dateandtime">
                                     <div id="dategregorian"></div>
                                     <div id="datehijri"></div>
                                     <div id="datehijri_ar"></div>
-                                    </div>
+                                    <p></p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <table class="tbllistprayer">
+                    <table class="tbllistprayer" id="tblprayers">
                         <tbody>
                             <tr class="headtdprayer">
                                 <td colspan="3" class="heightlithcolor">Prayer</td>
@@ -337,27 +364,27 @@
                                 <td colspan="3" class="heightlithcolor">Iqama</td>
                             </tr>
                             <tr>
-                                <td colspan="3" >Fajr</td>
+                                <td colspan="3" id="fajr">Fajr</td>
                                 <td colspan="3" id="fajrtime"></td>
                                 <td colspan="3" id="fajrtimeIqama"></td>
                             </tr>
                             <tr>
-                                <td colspan="3">Dhuhr</td>
+                                <td colspan="3" id="dhuhr">Dhuhr</td>
                                 <td colspan="3" id="dhuhrtime"></td>
                                 <td colspan="3" id="dhuhrtimeIqama"></td>
                             </tr>
                             <tr>
-                                <td colspan="3">Asr</td>
+                                <td colspan="3" id="asr">Asr</td>
                                 <td colspan="3" id="asrtime"></td>
                                 <td colspan="3" id="asrtimeIqama"></td>
                             </tr>
                             <tr>
-                                <td colspan="3" >Maghrib</td>
+                                <td colspan="3" id="maghrib">Maghrib</td>
                                 <td colspan="3" id="maghribtime"></td>
                                 <td colspan="3" id="maghribtimeIqama"></td>
                             </tr>
                             <tr>
-                                <td colspan="3">Ishaa</td>
+                                <td colspan="3" id="isha">Ishaa</td>
                                 <td colspan="3" id="ishatime"></td>
                                 <td colspan="3" id="ishatimeIqama"></td>
                             </tr>
@@ -376,13 +403,11 @@
                 </div>
                 
                 <div>
-                    <p id="mins"></p>
-                    <p id="secs"></p>
-                    <h2 id="end"></h2>
+                    <h3 class="prayerCountDownMsg1" id="currentPrayer"></h3>
+                    <h3 class="prayerCountDownMsg2" id="mins"></h3>
                 </div>
 
                 <div id="specialMsg">
-                    <br>
                     <br>
                     Zakat Al-Fitr is $15 per person. Must be paid before Eid Al-Fitr prayers!
                 </div>
@@ -419,7 +444,8 @@
                 var ishaIqama = tConvert(addMinutes(`${data.data.timings.Isha}`, 10));
 
                 var city = 'New Britain'
-                var dategregorian = `${data.data.date.gregorian.month.en + " " +
+                var dategregorian = `${data.data.date.gregorian.weekday.en + " " +
+                    data.data.date.gregorian.month.en + " " +
                     data.data.date.gregorian.day + " " +
                     data.data.date.gregorian.year}`;
                 var datehijri = `${data.data.date.hijri.month.en + " " +
@@ -521,6 +547,7 @@
             var myfunc = setInterval(function() {
 
                 var now = new Date().getTime();
+                //now = new Date(now + 50*60000);
                 var timeleft = countDownDate - now;
                     
                 // Calculating the days, hours, minutes and seconds left
@@ -530,15 +557,13 @@
                 var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
                     
                 // Result is output to the specific element
-                document.getElementById("mins").innerHTML = "Time until Iqama: " + minutes + "m " + seconds + "s "
-                //document.getElementById("secs").innerHTML = seconds + "s " 
+                document.getElementById("mins").innerHTML = "Iqama in: " + minutes + "m " + seconds + "s "
                     
                 // Display the message when countdown is over
                 if (timeleft < 0) {
                     clearInterval(myfunc);
+                    document.getElementById("currentPrayer").innerHTML = "";
                     document.getElementById("mins").innerHTML = ""
-                    //document.getElementById("secs").innerHTML = ""
-                    document.getElementById("end").innerHTML = "";
                 }
             }, 1000);
         }
@@ -547,7 +572,8 @@
 
             var intervalId = window.setInterval(function(){
                 var now = new Date();
-                //now = new Date(now.getTime() + 20*60000);
+                //now = new Date(now.getTime() + 50*60000);
+
                 var fajrBeginTime = parseTime(fajrRawTime);
                 var fajrEndTime = new Date(fajrBeginTime.getTime() + 20*60000);
                 // console.log("nowTime: " + now);
@@ -556,6 +582,14 @@
                 // console.log(checkIfTimeIsInRange(now, fajrBeginTime, fajrEndTime));
                 if (checkIfTimeIsInRange(now, fajrBeginTime, fajrEndTime)) {
                     countDownTimer(addZero(fajrEndTime.getHours()) + ":" + addZero(fajrEndTime.getMinutes()));
+                    document.getElementById("currentPrayer").innerHTML = "It is time for Fajr";
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[1];
+                    row.className += " highLight";
+                } else {
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[1];
+                    row.className = "";
                 }
 
                 var dhuhrBeginTime = parseTime(dhuhrRawTime);
@@ -564,8 +598,16 @@
                 // console.log("dhuhrBeginTime: " + dhuhrBeginTime);
                 // console.log("dhuhrEndTime: " + dhuhrEndTime);
                 // console.log(checkIfTimeIsInRange(now, dhuhrBeginTime, dhuhrEndTime));
-                if (checkIfTimeIsInRange(now, dhuhrBeginTime, dhuhrEndTime)) {
+                if (checkIfTimeIsInRange(now, dhuhrBeginTime, dhuhrEndTime) && now.getDay != 5) {
                     countDownTimer(addZero(dhuhrEndTime.getHours()) + ":" + addZero(dhuhrEndTime.getMinutes()));
+                    document.getElementById("currentPrayer").innerHTML = "It is time for Dhuhr";
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[2];
+                    row.className += " highLight";
+                } else {
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[2];
+                    row.className = "";
                 }
 
                 var asrBeginTime = parseTime(asrRawTime);
@@ -576,16 +618,32 @@
                 // console.log(checkIfTimeIsInRange(now, asrBeginTime, asrEndTime));
                 if (checkIfTimeIsInRange(now, asrBeginTime, dhuhrEndTime)) {
                     countDownTimer(addZero(asrEndTime.getHours()) + ":" + addZero(asrEndTime.getMinutes()));
+                    document.getElementById("currentPrayer").innerHTML = "It is time for Asr";
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[3];
+                    row.className += " highLight";
+                } else {
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[3];
+                    row.className = "";
                 }
 
                 var maghribBeginTime = parseTime(maghribRawTime);
                 var maghribEndTime = new Date(maghribBeginTime.getTime() + 10*60000);
-                // console.log("nowTime: " + now);
-                // console.log("maghribBeginTime: " + maghribBeginTime);
-                // console.log("maghribEndTime: " + maghribEndTime);
-                // console.log(checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime));
+                console.log("nowTime: " + now);
+                console.log("maghribBeginTime: " + maghribBeginTime);
+                console.log("maghribEndTime: " + maghribEndTime);
+                console.log(checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime));
                 if (checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime)) {
                     countDownTimer(addZero(maghribEndTime.getHours()) + ":" + addZero(maghribEndTime.getMinutes()));
+                    document.getElementById("currentPrayer").innerHTML = "It is time for Maghrib";
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[4];
+                    row.className += " highLight";
+                } else {
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[4];
+                    row.className = "";
                 }
 
                 var ishaBeginTime = parseTime(ishaRawTime);
@@ -596,9 +654,17 @@
                 // console.log(checkIfTimeIsInRange(now, ishaBeginTime, ishaEndTime));
                 if (checkIfTimeIsInRange(now, ishaBeginTime, ishaEndTime)) {
                     countDownTimer(addZero(ishaEndTime.getHours()) + ":" + addZero(ishaEndTime.getMinutes()));
+                    document.getElementById("currentPrayer").innerHTML = "It is time for Ishaa";
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[5];
+                    row.className += " highLight";
+                } else {
+                    var table = document.getElementById("tblprayers");
+                    var row = table.rows[5];
+                    row.className = "";
                 }
 
-            }, 5000);
+            }, 3000);
         }
 
         function addZero(i) {
