@@ -630,10 +630,10 @@
 
                 var maghribBeginTime = parseTime(maghribRawTime);
                 var maghribEndTime = new Date(maghribBeginTime.getTime() + 10*60000);
-                console.log("nowTime: " + now);
-                console.log("maghribBeginTime: " + maghribBeginTime);
-                console.log("maghribEndTime: " + maghribEndTime);
-                console.log(checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime));
+                // console.log("nowTime: " + now);
+                // console.log("maghribBeginTime: " + maghribBeginTime);
+                // console.log("maghribEndTime: " + maghribEndTime);
+                // console.log(checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime));
                 if (checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime)) {
                     countDownTimer(addZero(maghribEndTime.getHours()) + ":" + addZero(maghribEndTime.getMinutes()));
                     document.getElementById("currentPrayer").innerHTML = "It is time for Maghrib";
