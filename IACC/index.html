@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="1800">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        var fajrRawTime = null;
+        var dhuhrRawTime = null;
+        var asrRawTime = null;
+        var maghribRawTime = null;
+        var ishaRawTime = null;
+    </script>
     <style>
         * {
             box-sizing: border-box;
@@ -369,8 +376,6 @@
                 </div>
                 
                 <div>
-                    <p id="days"></p>
-                    <p id="hours"></p>
                     <p id="mins"></p>
                     <p id="secs"></p>
                     <h2 id="end"></h2>
@@ -382,84 +387,91 @@
                     Zakat Al-Fitr is $15 per person. Must be paid before Eid Al-Fitr prayers!
                 </div>
 
-                <script>
-
-                    var todayDate = new Date();
-                    var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
-                    console.log("today is " + today);
-
-                    $.getJSON('https://api.aladhan.com/v1/timingsByCity?city=New-Britain&country=United%20States&method=2', function (data) {
-
-                        fajrRawTime = `${data.data.timings.Fajr}`;
-                        console.log(fajrRawTime);
-
-                        var fajr = tConvert(`${data.data.timings.Fajr}`);
-                        var dhuhr = tConvert(`${data.data.timings.Dhuhr}`);
-                        var asr = tConvert(`${data.data.timings.Asr}`);
-                        var maghrib = tConvert(`${data.data.timings.Maghrib}`);
-                        var isha = tConvert(`${data.data.timings.Isha}`);
-
-                        var fajrIqama = tConvert(addMinutes(`${data.data.timings.Fajr}`, 20));
-                        var dhuhrIqama = tConvert(addMinutes(`${data.data.timings.Dhuhr}`, 20));
-                        var asrIqama = tConvert(addMinutes(`${data.data.timings.Asr}`, 20));
-                        var maghribIqama = tConvert(addMinutes(`${data.data.timings.Maghrib}`, 10));
-                        var ishaIqama = tConvert(addMinutes(`${data.data.timings.Isha}`, 10));
-
-                        var city = 'New Britain'
-                        var dategregorian = `${data.data.date.gregorian.month.en + " " +
-                            data.data.date.gregorian.day + " " +
-                            data.data.date.gregorian.year}`;
-                        var datehijri = `${data.data.date.hijri.month.en + " " +
-                            data.data.date.hijri.day + " " +
-                            data.data.date.hijri.year}`;
-                        var datehijri_ar = `${data.data.date.hijri.month.ar + " " +
-                            data.data.date.hijri.day + " " +
-                            data.data.date.hijri.year}`;
-
-                        $("#fajrtime").html(fajr);
-                        $("#dhuhrtime").html(dhuhr);
-                        $("#asrtime").html(asr);
-                        $("#maghribtime").html(maghrib);
-                        $("#ishatime").html(isha);
-
-                        $("#fajrtimeIqama").html(fajrIqama);
-                        $("#dhuhrtimeIqama").html(dhuhrIqama);
-                        $("#asrtimeIqama").html(asrIqama);
-                        $("#maghribtimeIqama").html(maghribIqama);
-                        $("#ishatimeIqama").html(ishaIqama);
-
-                        $("#city").html(city);
-                        $("#dategregorian").html(dategregorian);
-                        $("#datehijri").html(datehijri);
-                        $("#datehijri_ar").html(datehijri_ar);
-
-                    });
-                    
-                    function tConvert (time) {
-                        // Check correct time format and split into components
-                        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-                        if (time.length > 1) { // If time format correct
-                            time = time.slice (1);  // Remove full string match value
-                            time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-                            time[0] = +time[0] % 12 || 12; // Adjust hours
-                        }
-                        return time.join (''); // return adjusted time or original string
-                    }
-
-                    function addMinutes(time, minsToAdd) {
-                        function D(J){ return (J<10? '0':'') + J;};
-                        var piece = time.split(':');
-                        var mins = piece[0]*60 + +piece[1] + +minsToAdd;
-
-                        return D(mins%(24*60)/60 | 0) + ':' + D(mins%60);  
-                    }
-                      
-                </script>
-
             </div>
         </div>
     </div>
+
+    <script>
+
+        function getPrayerTimes() {
+            var todayDate = new Date();
+            var today = todayDate.getFullYear() + "-" + (todayDate.getMonth()+1) + "-" + todayDate.getDate();
+            console.log("today is " + today);
+
+            $.getJSON('https://api.aladhan.com/v1/timingsByCity?city=New-Britain&country=United%20States&method=2', function (data) {
+
+                fajrRawTime = `${data.data.timings.Fajr}`;
+                dhuhrRawTime = `${data.data.timings.Dhuhr}`;
+                asrRawTime = `${data.data.timings.Asr}`;
+                maghribRawTime = `${data.data.timings.Maghrib}`;
+                ishaRawTime = `${data.data.timings.Isha}`;
+
+                var fajr = tConvert(`${data.data.timings.Fajr}`);
+                var dhuhr = tConvert(`${data.data.timings.Dhuhr}`);
+                var asr = tConvert(`${data.data.timings.Asr}`);
+                var maghrib = tConvert(`${data.data.timings.Maghrib}`);
+                var isha = tConvert(`${data.data.timings.Isha}`);
+
+                var fajrIqama = tConvert(addMinutes(`${data.data.timings.Fajr}`, 20));
+                var dhuhrIqama = tConvert(addMinutes(`${data.data.timings.Dhuhr}`, 20));
+                var asrIqama = tConvert(addMinutes(`${data.data.timings.Asr}`, 20));
+                var maghribIqama = tConvert(addMinutes(`${data.data.timings.Maghrib}`, 10));
+                var ishaIqama = tConvert(addMinutes(`${data.data.timings.Isha}`, 10));
+
+                var city = 'New Britain'
+                var dategregorian = `${data.data.date.gregorian.month.en + " " +
+                    data.data.date.gregorian.day + " " +
+                    data.data.date.gregorian.year}`;
+                var datehijri = `${data.data.date.hijri.month.en + " " +
+                    data.data.date.hijri.day + " " +
+                    data.data.date.hijri.year}`;
+                var datehijri_ar = `${data.data.date.hijri.month.ar + " " +
+                    data.data.date.hijri.day + " " +
+                    data.data.date.hijri.year}`;
+
+                $("#fajrtime").html(fajr);
+                $("#dhuhrtime").html(dhuhr);
+                $("#asrtime").html(asr);
+                $("#maghribtime").html(maghrib);
+                $("#ishatime").html(isha);
+
+                $("#fajrtimeIqama").html(fajrIqama);
+                $("#dhuhrtimeIqama").html(dhuhrIqama);
+                $("#asrtimeIqama").html(asrIqama);
+                $("#maghribtimeIqama").html(maghribIqama);
+                $("#ishatimeIqama").html(ishaIqama);
+
+                $("#city").html(city);
+                $("#dategregorian").html(dategregorian);
+                $("#datehijri").html(datehijri);
+                $("#datehijri_ar").html(datehijri_ar);
+
+                //countDownTimer();
+                getCurrentPrayer();
+            });
+        }
+        
+        function tConvert (time) {
+            // Check correct time format and split into components
+            time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) { // If time format correct
+                time = time.slice (1);  // Remove full string match value
+                time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+                time[0] = +time[0] % 12 || 12; // Adjust hours
+            }
+            return time.join (''); // return adjusted time or original string
+        }
+
+        function addMinutes(time, minsToAdd) {
+            function D(J){ return (J<10? '0':'') + J;};
+            var piece = time.split(':');
+            var mins = piece[0]*60 + +piece[1] + +minsToAdd;
+
+            return D(mins%(24*60)/60 | 0) + ':' + D(mins%60);  
+        }
+          
+    </script>
 
     <script>
         let slideIndex = 0;
@@ -497,55 +509,143 @@
         setTimeout('window.location = window.location.href', msTillMidnight);
     </script>
 
-    <!-- <script>
-        // The data/time we want to countdown to
-        
-        //var countDownDate = new Date("Jul 25, 2022 16:37:52").getTime();
-        console.log(fajrRawTime);
-        parseTime(fajrRawTime);
-        console.log(fajrRawTime);
+    <script>
+        // The date/time we want to countdown to
+       function countDownTimer(prayerIqama) { 
+            //var countDownDate = new Date("Jul 25, 2022 16:37:52").getTime();
+            //console.log("prayerIqama: " + prayerIqama);
+            //var countDownDate = parseTime(fajrRawTime);
+            var countDownDate = parseTime(prayerIqama);
 
-        // Run myfunc every second
-        var myfunc = setInterval(function() {
+            // Run myfunc every second
+            var myfunc = setInterval(function() {
 
-        var now = new Date().getTime();
-        var timeleft = countDownDate - now;
-            
-        // Calculating the days, hours, minutes and seconds left
-        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-            
-        // Result is output to the specific element
-        document.getElementById("days").innerHTML = days + "d "
-        document.getElementById("hours").innerHTML = hours + "h " 
-        document.getElementById("mins").innerHTML = minutes + "m " 
-        document.getElementById("secs").innerHTML = seconds + "s " 
-            
-        // Display the message when countdown is over
-        if (timeleft < 0) {
-            clearInterval(myfunc);
-            document.getElementById("days").innerHTML = ""
-            document.getElementById("hours").innerHTML = "" 
-            document.getElementById("mins").innerHTML = ""
-            document.getElementById("secs").innerHTML = ""
-            document.getElementById("end").innerHTML = "TIME UP!!";
+                var now = new Date().getTime();
+                var timeleft = countDownDate - now;
+                    
+                // Calculating the days, hours, minutes and seconds left
+                //var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+                    
+                // Result is output to the specific element
+                document.getElementById("mins").innerHTML = "Time until Iqama: " + minutes + "m " + seconds + "s "
+                //document.getElementById("secs").innerHTML = seconds + "s " 
+                    
+                // Display the message when countdown is over
+                if (timeleft < 0) {
+                    clearInterval(myfunc);
+                    document.getElementById("mins").innerHTML = ""
+                    //document.getElementById("secs").innerHTML = ""
+                    document.getElementById("end").innerHTML = "";
+                }
+            }, 1000);
         }
-        }, 1000);
 
-    function parseTime( t ) {
-        var countDownDate = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(), 
-            00, 0, 0 // ...at 00:00:00 hours
-        );
-        var time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
-        d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
-        d.setMinutes( parseInt( time[2]) || 0 );
-        return d;
-    } -->
+        function getCurrentPrayer() {
+
+            var intervalId = window.setInterval(function(){
+                var now = new Date();
+                //now = new Date(now.getTime() + 20*60000);
+                var fajrBeginTime = parseTime(fajrRawTime);
+                var fajrEndTime = new Date(fajrBeginTime.getTime() + 20*60000);
+                // console.log("nowTime: " + now);
+                // console.log("fajrBeginTime: " + fajrBeginTime);
+                // console.log("fajrEndTime: " + fajrEndTime);
+                // console.log(checkIfTimeIsInRange(now, fajrBeginTime, fajrEndTime));
+                if (checkIfTimeIsInRange(now, fajrBeginTime, fajrEndTime)) {
+                    countDownTimer(addZero(fajrEndTime.getHours()) + ":" + addZero(fajrEndTime.getMinutes()));
+                }
+
+                var dhuhrBeginTime = parseTime(dhuhrRawTime);
+                var dhuhrEndTime = new Date(dhuhrBeginTime.getTime() + 20*60000);
+                // console.log("nowTime: " + now);
+                // console.log("dhuhrBeginTime: " + dhuhrBeginTime);
+                // console.log("dhuhrEndTime: " + dhuhrEndTime);
+                // console.log(checkIfTimeIsInRange(now, dhuhrBeginTime, dhuhrEndTime));
+                if (checkIfTimeIsInRange(now, dhuhrBeginTime, dhuhrEndTime)) {
+                    countDownTimer(addZero(dhuhrEndTime.getHours()) + ":" + addZero(dhuhrEndTime.getMinutes()));
+                }
+
+                var asrBeginTime = parseTime(asrRawTime);
+                var asrEndTime = new Date(asrBeginTime.getTime() + 20*60000);
+                // console.log("nowTime: " + now);
+                // console.log("asrBeginTime: " + asrBeginTime);
+                // console.log("asrEndTime: " + asrEndTime);
+                // console.log(checkIfTimeIsInRange(now, asrBeginTime, asrEndTime));
+                if (checkIfTimeIsInRange(now, asrBeginTime, dhuhrEndTime)) {
+                    countDownTimer(addZero(asrEndTime.getHours()) + ":" + addZero(asrEndTime.getMinutes()));
+                }
+
+                var maghribBeginTime = parseTime(maghribRawTime);
+                var maghribEndTime = new Date(maghribBeginTime.getTime() + 10*60000);
+                // console.log("nowTime: " + now);
+                // console.log("maghribBeginTime: " + maghribBeginTime);
+                // console.log("maghribEndTime: " + maghribEndTime);
+                // console.log(checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime));
+                if (checkIfTimeIsInRange(now, maghribBeginTime, maghribEndTime)) {
+                    countDownTimer(addZero(maghribEndTime.getHours()) + ":" + addZero(maghribEndTime.getMinutes()));
+                }
+
+                var ishaBeginTime = parseTime(ishaRawTime);
+                var ishaEndTime = new Date(ishaBeginTime.getTime() + 10*60000);
+                // console.log("nowTime: " + now);
+                // console.log("ishaBeginTime: " + ishaBeginTime);
+                // console.log("ishaEndTime: " + ishaEndTime);
+                // console.log(checkIfTimeIsInRange(now, ishaBeginTime, ishaEndTime));
+                if (checkIfTimeIsInRange(now, ishaBeginTime, ishaEndTime)) {
+                    countDownTimer(addZero(ishaEndTime.getHours()) + ":" + addZero(ishaEndTime.getMinutes()));
+                }
+
+            }, 5000);
+        }
+
+        function addZero(i) {
+            if (i < 10) {i = "0" + i}
+            return i;
+        }
+
+        const checkIfTimeIsInRange = (d, start, end) => {
+            if (start.getHours() < d.getHours() && d.getHours() < end.getHours()) {
+                return true;
+            } else if (start.getHours() == d.getHours()) {
+                if (d.getHours() == end.getHours()) {
+                    if(start.getMinutes() <= d.getMinutes() && d.getMinutes() <= end.getMinutes()) {    
+                        return true
+                    } else {
+                        return false
+                    }
+                } else if(start.getMinutes() <= d.getMinutes()) {
+                    return true
+                } else {
+                    return false
+                }
+            } else if (d.getHours() == end.getHours()) {
+                if(d.getMinutes() <= end.getMinutes()) {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+
+        function parseTime( t ) {
+            var countDownDate = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate(), 
+                00, 0, 0 // ...at 00:00:00 hours
+            );
+            var time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+            countDownDate.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+            countDownDate.setMinutes( parseInt( time[2]) || 0 );
+            return countDownDate;
+        }
+
+        window.onload = getPrayerTimes();
     </script>
     
 
