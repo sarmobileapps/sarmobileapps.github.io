@@ -595,7 +595,7 @@
                     document.getElementById("currentPrayer").innerHTML = "It is time for Fajr";
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[1];
-                    row.className += " highLight";
+                    row.className = " highLight";
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[1];
@@ -613,7 +613,7 @@
                     document.getElementById("currentPrayer").innerHTML = "It is time for Dhuhr";
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[2];
-                    row.className += " highLight";
+                    row.className = " highLight";
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[2];
@@ -626,12 +626,12 @@
                 // console.log("asrBeginTime: " + asrBeginTime);
                 // console.log("asrEndTime: " + asrEndTime);
                 // console.log(checkIfTimeIsInRange(now, asrBeginTime, asrEndTime));
-                if (checkIfTimeIsInRange(now, asrBeginTime, dhuhrEndTime)) {
+                if (checkIfTimeIsInRange(now, asrBeginTime, asrEndTime)) {
                     countDownTimer(addZero(asrEndTime.getHours()) + ":" + addZero(asrEndTime.getMinutes()));
                     document.getElementById("currentPrayer").innerHTML = "It is time for Asr";
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[3];
-                    row.className += " highLight";
+                    row.className = " highLight";
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[3];
@@ -649,7 +649,7 @@
                     document.getElementById("currentPrayer").innerHTML = "It is time for Maghrib";
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[4];
-                    row.className += " highLight";
+                    row.className = " highLight";
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[4];
@@ -667,7 +667,7 @@
                     document.getElementById("currentPrayer").innerHTML = "It is time for Ishaa";
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[5];
-                    row.className += " highLight";
+                    row.className = " highLight";
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[5];
