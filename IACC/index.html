@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="1800">
+    <meta http-equiv="refresh" content="3600">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         var fajrRawTime = null;
@@ -112,6 +112,12 @@
         .float-child-right {
             width: 25%;
             float: right;
+            padding: 2px;
+        }
+
+        .float-child-center {
+            width: 50%;
+            float: left;
             padding: 2px;
         }
 
@@ -248,7 +254,7 @@
 
     <div class="float-container">
 
-        <div class="float-child-left">
+        <div id="slideShowDiv" class="float-child-left">
 
 
             <div class="slideshow-container" style="width:100%;">
@@ -320,7 +326,7 @@
             </div>
         </div>
 
-        <div class="float-child-right">
+        <div id="prayerTimesDiv" class="float-child-right">
 
                 <div class="mypanel"></div>
                 <div id="boxframeprayer">
@@ -547,7 +553,7 @@
             var myfunc = setInterval(function() {
 
                 var now = new Date().getTime();
-                //now = new Date(now + 50*60000);
+                now = new Date(now + 30*60000);
                 var timeleft = countDownDate - now;
                     
                 // Calculating the days, hours, minutes and seconds left
@@ -558,12 +564,16 @@
                     
                 // Result is output to the specific element
                 document.getElementById("mins").innerHTML = "Iqama in: " + minutes + "m " + seconds + "s "
+                document.getElementById("slideShowDiv").className = " float-child-center";
+                document.getElementById("prayerTimesDiv").className = " float-child-center"
                     
                 // Display the message when countdown is over
                 if (timeleft < 0) {
                     clearInterval(myfunc);
                     document.getElementById("currentPrayer").innerHTML = "";
                     document.getElementById("mins").innerHTML = ""
+                    document.getElementById("slideShowDiv").className = " float-child-left";
+                    document.getElementById("prayerTimesDiv").className = " float-child-right"
                 }
             }, 1000);
         }
@@ -572,7 +582,7 @@
 
             var intervalId = window.setInterval(function(){
                 var now = new Date();
-                //now = new Date(now.getTime() + 50*60000);
+                now = new Date(now.getTime() + 30*60000);
 
                 var fajrBeginTime = parseTime(fajrRawTime);
                 var fajrEndTime = new Date(fajrBeginTime.getTime() + 20*60000);
