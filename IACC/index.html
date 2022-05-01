@@ -721,6 +721,10 @@
             return countDownDate;
         }
 
+        setTimeout(function() {
+            location.reload();
+        }, 3600000);  // refresh page every hour
+
         window.onload = getPrayerTimes();
     </script>
     
