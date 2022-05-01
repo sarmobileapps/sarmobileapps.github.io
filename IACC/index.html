@@ -553,7 +553,7 @@
             var myfunc = setInterval(function() {
 
                 var now = new Date().getTime();
-                now = new Date(now + 30*60000);
+                //now = new Date(now + 30*60000);
                 var timeleft = countDownDate - now;
                     
                 // Calculating the days, hours, minutes and seconds left
@@ -582,7 +582,7 @@
 
             var intervalId = window.setInterval(function(){
                 var now = new Date();
-                now = new Date(now.getTime() + 30*60000);
+                //now = new Date(now.getTime() + 30*60000);
 
                 var fajrBeginTime = parseTime(fajrRawTime);
                 var fajrEndTime = new Date(fajrBeginTime.getTime() + 20*60000);
