@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="3600">
+    <meta http-equiv="refresh" content="1800">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         var fajrRawTime = null;
@@ -233,7 +233,7 @@
             font-size: 40px;
             text-align: center;
             color: red;
-            animation: blinker 4s linear infinite;
+            animation: blinker 1s linear infinite;
         }
 
         @keyframes blinker {
@@ -258,10 +258,6 @@
 
 
             <div class="slideshow-container" style="width:100%;">
-
-                <div class="mySlides fade" height="100%">
-                    <img src="images/Fundraising_Ramadan_2022_v2.001.jpeg" style="width:100%; height:90vh;">
-                </div>
 
                 <div class="mySlides fade">
                     <img src="images/Fundraising_Ramadan_2022_v2.002.jpeg" style="width:100%; height:90vh;">
@@ -290,17 +286,9 @@
                 <div class="mySlides fade">
                     <img src="images/Fundraising_Ramadan_2022_v2.008.jpeg" style="width:100%; height:90vh;">
                 </div>
-
-                <div class="mySlides fade">
-                    <img src="images/Fundraising_Ramadan_2022_v2.009.jpeg" style="width:100%; height:90vh;">
-                </div>
                 
                 <div class="mySlides fade">
                     <img src="images/IACC_Donation_Options.001.jpeg" style="width:100%; height:90vh;">
-                </div>
-
-                <div class="mySlides fade">
-                    <img src="images/EidAlFitr2022.jpg" style="width:100%; height:90vh;">
                 </div>
 
                 <div class="mySlides fade">
@@ -311,9 +299,6 @@
             <br>
 
             <div style="text-align:center;">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
@@ -415,7 +400,7 @@
 
                 <div id="specialMsg">
                     <br>
-                    Zakat Al-Fitr is $15 per person. Must be paid before Eid Al-Fitr prayers!
+                    
                 </div>
 
             </div>
@@ -553,7 +538,7 @@
             var myfunc = setInterval(function() {
 
                 var now = new Date().getTime();
-                //now = new Date(now + 30*60000);
+                //now = new Date(now + 58*60000);  // Only enable for testing
                 var timeleft = countDownDate - now;
                     
                 // Calculating the days, hours, minutes and seconds left
@@ -582,7 +567,7 @@
 
             var intervalId = window.setInterval(function(){
                 var now = new Date();
-                //now = new Date(now.getTime() + 30*60000);
+                //now = new Date(now.getTime() + 58*60000);  // Only enable for testing
 
                 var fajrBeginTime = parseTime(fajrRawTime);
                 var fajrEndTime = new Date(fajrBeginTime.getTime() + 20*60000);
