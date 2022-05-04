@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="1800">
+    <meta http-equiv="refresh" content="3600">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         var fajrRawTime = null;
@@ -11,6 +11,7 @@
         var asrRawTime = null;
         var maghribRawTime = null;
         var ishaRawTime = null;
+        var playedAlready = false;
     </script>
     <style>
         * {
@@ -538,7 +539,7 @@
             var myfunc = setInterval(function() {
 
                 var now = new Date().getTime();
-                //now = new Date(now + 58*60000);  // Only enable for testing
+                //now = new Date(now + 66*60000);  // ONLY ENABLE FOR TESTING
                 var timeleft = countDownDate - now;
                     
                 // Calculating the days, hours, minutes and seconds left
@@ -551,9 +552,10 @@
                 document.getElementById("mins").innerHTML = "Iqama in: " + minutes + "m " + seconds + "s "
                 document.getElementById("slideShowDiv").className = " float-child-center";
                 document.getElementById("prayerTimesDiv").className = " float-child-center"
-                    
+                
                 // Display the message when countdown is over
                 if (timeleft < 0) {
+                    playedAlready = false;
                     clearInterval(myfunc);
                     document.getElementById("currentPrayer").innerHTML = "";
                     document.getElementById("mins").innerHTML = ""
@@ -567,7 +569,7 @@
 
             var intervalId = window.setInterval(function(){
                 var now = new Date();
-                //now = new Date(now.getTime() + 58*60000);  // Only enable for testing
+                //now = new Date(now.getTime() + 66*60000);  // ONLY ENABLE FOR TESTING
 
                 var fajrBeginTime = parseTime(fajrRawTime);
                 var fajrEndTime = new Date(fajrBeginTime.getTime() + 20*60000);
@@ -581,6 +583,10 @@
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[1];
                     row.className = " highLight";
+                    // Check if should play sound for begin adhan within the same 2 seconds
+                    if (checkIfTimeIsInRange2(now, fajrBeginTime, new Date(fajrBeginTime.getTime() + 5000))) {
+                        playWhenReady();
+                    }
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[1];
@@ -599,6 +605,10 @@
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[2];
                     row.className = " highLight";
+                    // Check if should play sound for begin adhan within the same 2 seconds
+                    if (checkIfTimeIsInRange2(now, dhuhrBeginTime, new Date(dhuhrBeginTime.getTime() + 5000))) {
+                        playWhenReady();
+                    }
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[2];
@@ -617,6 +627,10 @@
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[3];
                     row.className = " highLight";
+                    // Check if should play sound for begin adhan within the same 2 seconds
+                    if (checkIfTimeIsInRange2(now, asrBeginTime, new Date(asrBeginTime.getTime() + 5000))) {
+                        playWhenReady();
+                    }
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[3];
@@ -635,6 +649,10 @@
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[4];
                     row.className = " highLight";
+                    // Check if should play sound for begin adhan within the same 2 seconds
+                    if (checkIfTimeIsInRange2(now, maghribBeginTime, new Date(maghribBeginTime.getTime() + 5000))) {
+                        playWhenReady();
+                    }
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[4];
@@ -653,6 +671,10 @@
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[5];
                     row.className = " highLight";
+                    // Check if should play sound for begin adhan within the same 2 seconds
+                    if (checkIfTimeIsInRange2(now, ishaBeginTime, new Date(ishaBeginTime.getTime() + 5000))) {
+                        playWhenReady();
+                    }                    
                 } else {
                     var table = document.getElementById("tblprayers");
                     var row = table.rows[5];
@@ -693,6 +715,16 @@
             }
         }
 
+        const checkIfTimeIsInRange2 = (current, start, end) => {
+            // console.log("current: " + current.getTime());
+            // console.log("start: " + start.getTime());
+            // console.log("end: " + end.getTime());
+            if (start.getTime() <= current.getTime() && end.getTime() >= current.getTime()) {
+                    return true;
+            }
+            return false;
+        }
+
         function parseTime( t ) {
             var countDownDate = new Date(
                 now.getFullYear(),
@@ -704,6 +736,32 @@
             countDownDate.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
             countDownDate.setMinutes( parseInt( time[2]) || 0 );
             return countDownDate;
+        }
+
+        // var delay = 5000; // in milliseconds, check every minute
+        // var intervalId = setInterval("playWhenReady()", delay);
+
+        function playWhenReady()
+        {
+            var d = new Date();
+            var h = d.getHours();
+            var m = d.getMinutes(); 
+
+            //if (h === 17 && m === 00)
+            //{
+            if (!playedAlready) {
+                playSound('./audio/going-up-186.mp3');
+            }
+                //clearInterval(intervalId);              
+            //}
+        }
+
+        function playSound(soundFile)
+        {
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', soundFile);
+            audioElement.setAttribute('muted', true);
+            audioElement.play();
         }
 
         setTimeout(function() {
