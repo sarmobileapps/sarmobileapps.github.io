@@ -1,11 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fundraising Event</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000; /* Background color */
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff; /* Text color */
+    text-align: center;
+    background: #333; /* Adjust your background as needed */
+  }
+  .responsive-text {
+    font-size: 4vw; /* Scales the text size with the viewport width */
+    font-family: 'Arial', sans-serif; /* Use a common font for compatibility */
+    padding: 1vw; /* Provides padding that scales with the viewport width */
+  }
+  .gold-text {
+    background-color: #FFD700; /* Gold background */
+    font-family: 'Times New Roman', serif; /* This is a guess; adjust as needed */
+    
+    color: white;
+    text-shadow:
+        1px 1px 2px black, /* shadow to the bottom right */
+        0 0 25px blue, /* blue glow */
+        0 0 5px darkblue; /* darkblue glow */
+    padding: 10px; /* Adjust as needed */
+    }
 
+  .blue-text {
+    color: #0000FF;
+  }
+
+  .blue-text-lg {
+    font-size: 6vw; /* Scales the text size with the viewport width */
+    font-family: 'Arial', sans-serif; /* Use a common font for compatibility */
+    padding: 1vw; /* Provides padding that scales with the viewport width */
+    color: #0000FF;
+  }
+
+  .green-text {
+    color: #44f14c;
+  }
+
+  .red-text {
+    color: #FF0000;
+  }
+  .banner {
+    margin-bottom: 20px;
+  }
+  .fundraising-info {
+    font-size: 5vw; /* Scales the text size with the viewport width */
+    margin: 20px 0;
+  }
+  .important {
+    color: yellow;
+  }
+</style>
+</head>
 <body>
-
-
-
+<div class="container responsive-text">
+  <div class="banner blue-text-lg">Ramadan 2024 Fundraising</div>
+  <div class="gold-text">Please join us for Iftar Fundraiser tonight 4/5 7:00pm</div>
+  
+  <div class="fundraising-info">
+    <span<b>Fundraising Goal: $150,000</b></span><br>
+    <span class="important">How much we collected so far: $28,980</span><br>
+    <span class="red-text">How much we still need: $121,020</span>
+  </div><br>
+  
+  <div>
+    <span class="blue-text">Please donate to help this Masjid - Your Masjid!</span><br>
+    <span class="green-text">Please also remember to pay your pledged amount from last year</span>
+  </div>
+</div>
 </body>
-</html> 
+</html>
